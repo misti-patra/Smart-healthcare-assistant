@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import API_URL from "../api";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -33,7 +34,7 @@ function Register() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        `${API_URL}/api/auth/register`,
         {
           ...formData,
           role: "patient"

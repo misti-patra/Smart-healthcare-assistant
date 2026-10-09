@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import API_URL from "../api";
 
 function DoctorDashboard() {
   const [stats, setStats] = useState({
@@ -26,7 +27,7 @@ function DoctorDashboard() {
 
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/appointments/doctor/stats",
+          `${API_URL}/api/appointments/doctor/stats`,
           {
             headers: {
               Authorization: `Bearer ${token}`

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import API_URL from "../api";
+
 
 function DoctorProfile() {
   const [profile, setProfile] = useState(null);
@@ -11,7 +13,7 @@ function DoctorProfile() {
 
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/doctor/profile",
+          `${API_URL}/api/doctor/profile`,
           {
             headers: {
               Authorization: `Bearer ${token}`

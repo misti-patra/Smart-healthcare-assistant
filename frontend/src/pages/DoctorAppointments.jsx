@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import API_URL from "../api";
 
 function DoctorAppointments() {
   const [appointments, setAppointments] = useState([]);
@@ -9,7 +10,7 @@ function DoctorAppointments() {
     const token = localStorage.getItem("token");
 
     axios
-      .get("http://localhost:5000/api/appointments/doctor", {
+      .get(`${API_URL}/api/appointments/doctor`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -27,7 +28,7 @@ function DoctorAppointments() {
 
     axios
       .patch(
-        `http://localhost:5000/api/appointments/${appointmentId}/status`,
+        `${API_URL}/api/appointments/${appointmentId}/status`,
         { status },
         {
           headers: {

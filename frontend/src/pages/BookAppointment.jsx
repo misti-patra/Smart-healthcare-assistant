@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+
 function BookAppointment() {
   const [doctors, setDoctors] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,7 +19,7 @@ function BookAppointment() {
 
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/doctor/",
+          `${API_URL}/api/doctor/`,
           {
             headers: {
               Authorization: "Bearer " + token
@@ -61,7 +62,7 @@ function BookAppointment() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/appointments",
+        `${API_URL}/api/appointments`,
         {
           doctor: selectedDoctor.user._id,
           appointmentDate: dateTime.toISOString(),

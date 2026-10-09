@@ -1,7 +1,7 @@
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import API_URL from "../api";
 
 function PatientDashboard() {
   const [appointments, setAppointments] = useState([]);
@@ -25,7 +25,7 @@ function PatientDashboard() {
     const token = localStorage.getItem("token");
 
     axios
-      .get("http://localhost:5000/api/appointments/patient", {
+      .get(`${API_URL}/api/appointments/patient`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -43,7 +43,7 @@ function PatientDashboard() {
 
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/appointments/patient/stats",
+        `${API_URL}/api/appointments/patient/stats`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -65,7 +65,7 @@ function PatientDashboard() {
 
   try {
     const response = await axios.patch(
-      `http://localhost:5000/api/appointments/${appointmentId}/cancel`,
+      `${API_URL}/api/appointments/${appointmentId}/cancel`,
       {},
       {
         headers: {

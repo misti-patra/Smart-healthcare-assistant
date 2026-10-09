@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "../api";
 
 function PatientProfile() {
   const [formData, setFormData] = useState({
@@ -28,7 +29,7 @@ function PatientProfile() {
 
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/patient/profile",
+        `${API_URL}/api/patient/profile`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -59,7 +60,7 @@ function PatientProfile() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/patient/profile",
+        `${API_URL}/api/patient/profile`,
         {
           age: formData.age,
           gender: formData.gender,

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import API_URL from "../api";
 
 function MedicineInfo() {
   const [medicineName, setMedicineName] = useState("");
@@ -22,7 +23,7 @@ function MedicineInfo() {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/medicine/${encodeURIComponent(
+        `${API_URL}/api/medicine/${encodeURIComponent(
           medicineName.trim()
         )}`
       );

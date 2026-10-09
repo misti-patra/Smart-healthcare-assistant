@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import API_URL from "../api";
 
 function AppointmentHistory() {
   const [appointments, setAppointments] = useState([]);
@@ -13,7 +14,7 @@ function AppointmentHistory() {
 
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/appointments/patient",
+          `${API_URL}/api/appointments/patient`,
           {
             headers: {
               Authorization: `Bearer ${token}`
