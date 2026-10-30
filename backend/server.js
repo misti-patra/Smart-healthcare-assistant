@@ -22,7 +22,7 @@ connectDB();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://smart-healthcare-assistant.vercel.app"
+    "https://smart-healthcare-assistant-jet.vercel.app"
   ],
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
