@@ -1,3 +1,4 @@
+
 const express = require("express");
 const axios = require("axios");
 
@@ -5,19 +6,55 @@ const router = express.Router();
 
 router.get("/:medicineName", async (req, res) => {
   try {
-    const medicineName = req.params.medicineName;
+    const medicineName = req.params.medicineName.trim();
 
-    const response = await axios.get(
-      "https://api.fda.gov/drug/label.json",
-      {
-        params: {
-          search: `openfda.generic_name:"${medicineName}"`,
-          limit: 1
+    if (!medicineName) {
+      return res.status(400).json({
+        success: false,
+        message: "Please enter a medicine name."
+      });
+    }
+
+    // Search generic name first, then brand name.
+    const queries = [
+      `openfda.generic_name:"${medicineName}"`,
+      `openfda.brand_name:"${medicineName}"`
+    ];
+
+    let result = null;
+
+    for (const searchQuery of queries) {
+      try {
+        const response = await axios.get(
+          "https://api.fda.gov/drug/label.json",
+          {
+            params: {
+              search: searchQuery,
+              limit: 1
+            },
+            timeout: 10000
+          }
+        );
+
+        if (response.data.results?.length) {
+          result = response.data.results[0];
+          break;
+        }
+      } catch (error) {
+        // A 404 means this particular search had no matches.
+        if (error.response?.status !== 404) {
+          throw error;
         }
       }
-    );
+    }
 
-    const result = response.data.results[0];
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        message:
+          "Medicine information not found. Please check the medicine name and try again."
+      });
+    }
 
     res.json({
       success: true,
@@ -45,10 +82,10 @@ router.get("/:medicineName", async (req, res) => {
       error.response?.data || error.message
     );
 
-    res.status(404).json({
+    res.status(502).json({
       success: false,
       message:
-        "Medicine information not found. Please check the medicine name and try again."
+        "Unable to retrieve medicine information right now. Please try again later."
     });
   }
 });
