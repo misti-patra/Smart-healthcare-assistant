@@ -16,10 +16,17 @@ router.get("/:medicineName", async (req, res) => {
     }
 
     // Search generic name first, then brand name.
-    const queries = [
-      `openfda.generic_name:"${medicineName}"`,
-      `openfda.brand_name:"${medicineName}"`
-    ];
+    const normalizedName = medicineName.toLowerCase();
+
+    const searchNames =
+      normalizedName === "paracetamol"
+        ? ["paracetamol", "acetaminophen"]
+        : [medicineName];
+
+    const queries = searchNames.flatMap((name) => [
+      `openfda.generic_name:"${name}"`,
+      `openfda.brand_name:"${name}"`
+    ]);
 
     let result = null;
 
